@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:background="@drawable/users_list_shape"
+    >
+
+
+
+
+    <ImageView
+        android:layout_width="65dp"
+        android:layout_height="70dp"
+        android:background="@drawable/message_circle_photo"
+        android:id="@+id/avatarMessage"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/ic_launcher"
+        android:padding="5dp"
+        android:layout_marginLeft="5dp"
+
+
+        />
+
+    <TextView
+        android:id="@+id/nameOfPeople"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/avatarMessage"
+        android:text="name of people"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:textStyle="bold"
+        android:textSize="25dp"/>
+
+   <!-- <TextView
+        android:id="@+id/messageFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="text from fragment"
+        android:layout_below="@id/nameOfPeople"
+        android:layout_toRightOf="@id/avatarMessage"
+        />
+-->
+
+
+
+
+
+
+</RelativeLayout>
