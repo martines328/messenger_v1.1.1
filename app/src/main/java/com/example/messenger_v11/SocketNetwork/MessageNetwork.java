@@ -18,6 +18,7 @@ import static com.example.messenger_v11.MainActivity.person;
 public class MessageNetwork extends AsyncTask<String, Void, Void> {
 
 
+
     @Override
     protected Void doInBackground(String... strings) {
 
@@ -29,8 +30,8 @@ public class MessageNetwork extends AsyncTask<String, Void, Void> {
 
         while (true){
             try {
-                MessageQueue.getInstance().addOutputMessage(new Message(person.getNameOfPerson()
-                        , "test3"  ,strings[0]));
+                MessageQueue.getInstance().addOutputMessage(new Message("messageNetwork"
+                        ,"test4"  ,strings[0]));
             } catch (JSONException e) {
                 e.printStackTrace();
             }

@@ -10,7 +10,6 @@ import static com.example.messenger_v11.MainActivity.messageDao;
 
 public class AddOutputMessageToDB extends AsyncTask<Void,Void,Void> {
 
-   // MessageDao messageDao;
     Context context ;
     String from, to, message;
 
@@ -40,8 +39,6 @@ public class AddOutputMessageToDB extends AsyncTask<Void,Void,Void> {
         entity.setMessages(message);
         messageDao.insertMessage(entity);
 
-
-      
         return null;
     }
 

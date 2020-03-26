@@ -28,6 +28,7 @@ import com.example.messenger_v11.R;
 import com.example.messenger_v11.SocketNetwork.Message;
 import com.example.messenger_v11.SocketNetwork.MessageQueue;
 import com.example.messenger_v11.MessageRoom.AddOutputMessageToDB;
+import com.example.messenger_v11.SocketNetwork.SocketConnectingManager;
 
 import org.json.JSONException;
 
@@ -39,9 +40,10 @@ import static com.example.messenger_v11.MainActivity.person;
 public class Conversation extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "mylogs" ;
+    String sendToName;
 
 
-    Context context = Conversation.this;
+
     EditText messageTextET;
     ImageButton sendMessageButton;
 
@@ -49,6 +51,7 @@ public class Conversation extends AppCompatActivity implements View.OnClickListe
     RecyclerView messageRecyclreView;
     ConversationViewModel conversationViewModel;
     Intent intent ;
+
 
 
 
@@ -64,7 +67,7 @@ public class Conversation extends AppCompatActivity implements View.OnClickListe
 
 
         intent = getIntent();
-         String sendToName = intent.getStringExtra("sendToName");
+         sendToName = intent.getStringExtra("sendToName");
 
         messageTextET = (EditText) findViewById(R.id.messageText);
         sendMessageButton = (ImageButton) findViewById(R.id.sendButton);
@@ -114,27 +117,21 @@ public class Conversation extends AppCompatActivity implements View.OnClickListe
             String message = messageTextET.getText().toString();
 
             new AddOutputMessageToDB(this, person.getNameOfPerson()
-                    ,person.getSendTo(), message).execute();
+                    ,sendToName, message).execute();
 
             messageTextET.getText().clear();
 
 
 
             try {
-                MessageQueue.getInstance().addOutputMessage(new Message(person.getNameOfPerson()
-                        ,person.getSendTo(),message));
+                MessageQueue.getInstance().addOutputMessage(new Message(person.getNameOfPerson() /// FROM HERE WE SEND MESSAGE WITH EXISTING NAME
+                        ,sendToName,message));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
-            // messageNetworkThreads.execute(message);
 
 
-
-
-            //String text = asynctask.get();
-            //Log.i("mylog", "text from asynctask in onclick ---" + text);
-            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
         }
     }
 }

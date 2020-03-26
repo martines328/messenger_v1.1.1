@@ -9,7 +9,6 @@ public class Person {
     public String fragmentOfMessage;
     public int avatarPhotoId;
     public  String sendTo;
-    SharedPreferences sharedPreferences;
 
     public String getSendTo() {
         return sendTo;
@@ -22,7 +21,6 @@ public class Person {
     public String getNameOfPerson() {
         return nameOfPerson;
     }
-
     public void setNameOfPerson(String nameOfPerson) {
         this.nameOfPerson = nameOfPerson;
     }

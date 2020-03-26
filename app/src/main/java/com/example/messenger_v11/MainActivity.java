@@ -24,6 +24,7 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.core.view.GravityCompat;
@@ -41,6 +42,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener{
@@ -58,6 +60,9 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 
 
 
+    //TODO Auth activity
+    //TODO Delete USers and Message from DB
+    //TODO UI design
 
 
 
@@ -65,17 +70,15 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
 
         appContext = this;
+        changeColorMode(this);
 
         person.setNameOfPerson("test2");
-        person.setSendTo("test3");
-
 
 
         checkUserLogin();
-
-
         initDB();
 
 
@@ -265,8 +268,10 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 
     boolean checkUserLogin(){
         sharedPreferences = getSharedPreferences("userSettings", MODE_PRIVATE);
-        login = sharedPreferences.getString("username", "");
+        login = sharedPreferences.getString("email", "");
         password =  sharedPreferences.getString("password","");
+        Log.i("prefedit", "chek user login work");
+        Log.i("prefedit", login + password);
         boolean loginResult = false;
         if (login.equals("") || password.equals("")
                 || login == null || password == null){
@@ -278,6 +283,17 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 
             return true;
         }
+
+
+    }
+
+
+
+    void changeColorMode(Context context){
+
+        ///relativeLayoutUserList.setBackgroundColor(R.color.LightThemeColor);
+
+        // relativeLayoutUserList.setBackgroundResource(R.color.LightThemeColor);
 
 
     }

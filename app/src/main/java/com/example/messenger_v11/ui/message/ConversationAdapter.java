@@ -122,14 +122,18 @@ public class ConversationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
 
 
-    String [] getItemName(String fromPeople, String toPeople){
+     String [] getItemName(String fromPeople, String toPeople){
        String[] senddata = new String[2];
        senddata[0 ] = fromPeople;
        senddata[1] = toPeople;
-
         return senddata ;
 
     }
+
+
+
+
+
 
 
 

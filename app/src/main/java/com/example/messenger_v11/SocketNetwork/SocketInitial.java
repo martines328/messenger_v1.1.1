@@ -7,7 +7,7 @@ import static com.example.messenger_v11.MainActivity.person;
 
 public class SocketInitial extends AsyncTask<Void, Void, Void> {
 
-    private static final String host = "192.168.43.76";
+    private static final String host = "192.168.1.114";
     private static final int port = 5222;
 
 
@@ -15,7 +15,7 @@ public class SocketInitial extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... voids) {
 
-        new NetworkService(host,port, person.getNameOfPerson()).start();
+        new NetworkService(host,port, "socketinit").start();
 
 
         return null;

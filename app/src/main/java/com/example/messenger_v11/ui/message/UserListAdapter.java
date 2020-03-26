@@ -3,7 +3,6 @@ package com.example.messenger_v11.ui.message;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,8 +16,6 @@ import com.bumptech.glide.Glide;
 import com.example.messenger_v11.MessageRoom.usersRoom.UsersEntity;
 import com.example.messenger_v11.R;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -48,7 +45,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.recycler_message_list_item,parent
+        View view = LayoutInflater.from(context).inflate(R.layout.user_list_fragment_item,parent
         ,false);
         return new MyViewHolder(view);
     }

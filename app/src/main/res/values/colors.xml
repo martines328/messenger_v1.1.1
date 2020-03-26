@@ -3,4 +3,18 @@
     <color name="colorPrimary">#4D4D39</color>
     <color name="colorPrimaryDark">#46463B</color>
     <color name="colorAccent">#D81B60</color>
+
+
+
+
+
+    <color name="colorUserList">#3D1C1C</color>
+    <color name="colorLoginActitvity">#5C4D52</color>
+
+
+    <color name="darkThemeColor">#13263F</color>
+    <color name="LightThemeColor">#828A97</color>
+
+
+
 </resources>

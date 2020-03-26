@@ -20,7 +20,7 @@ public class ConversationViewModel extends ViewModel {
     public ConversationViewModel(Context context , String sendToNAme) {
         this.sendToNAme = sendToNAme;
         this.context  =context;
-        //Log.i("nameuser", sendToNAme);
+
         messageRepository = new MessageRepository(sendToNAme);
         messageInfoEntityList = messageRepository.getAllMessage();
 

@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/nav_message"
-        android:name="com.example.messenger_v11.ui.message.MessageFragment"
+        android:name="com.example.messenger_v11.ui.message.UserList"
         android:label="@string/menu_home"
-        tools:layout="@layout/fragment_message" />
+        tools:layout="@layout/user_list-fragment" />
 
     <fragment
         android:id="@+id/nav_gallery"
