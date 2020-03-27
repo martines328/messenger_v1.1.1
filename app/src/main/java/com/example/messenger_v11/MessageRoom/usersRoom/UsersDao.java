@@ -8,6 +8,7 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 
+import java.sql.SQLTransactionRollbackException;
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Flowable;
@@ -22,9 +23,16 @@ public interface UsersDao {
     @Insert
     void insertUsersToDB(UsersEntity usersEntity);
 
+/*
+
+    @Query("DELETE FROM users WHERE nickname = :peopleForDeleteFromDB ")
+    LiveData<UsersEntity> deleteUsersFromDB(String peopleForDeleteFromDB);
+*/
 
     @Delete
-    void deleteUsersFromDB(UsersEntity usersEntity);
+    void deleteUserFRomUSerList(UsersEntity usersEntity);
+
+
 
 
 

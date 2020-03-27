@@ -43,6 +43,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener{
@@ -60,9 +61,10 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 
 
 
-    //TODO Auth activity
+    //TODO Auth activity  ----- DONE
     //TODO Delete USers and Message from DB
     //TODO UI design
+
 
 
 
@@ -76,6 +78,9 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         changeColorMode(this);
 
         person.setNameOfPerson("test2");
+
+
+        changeColorMode(this);
 
 
         checkUserLogin();
@@ -186,14 +191,10 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                         UsersEntity usersEntity = new UsersEntity();
 
                         String userNicknameET = editText.getText().toString();
-
-                        usersEntity.setNickname(userNicknameET);
-                        usersEntity.setSendTo(userNicknameET);
-                        usersDao.insertUsersToDB(usersEntity);
-                        Toast.makeText(context, userNicknameET, Toast.LENGTH_SHORT).show();
-
-
-
+                            usersEntity.setNickname(userNicknameET);
+                            usersEntity.setSendTo(userNicknameET);
+                            usersDao.insertUsersToDB(usersEntity);
+                            Toast.makeText(context, userNicknameET, Toast.LENGTH_SHORT).show();
 
                     }
                 });
@@ -291,10 +292,10 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 
     void changeColorMode(Context context){
 
-        ///relativeLayoutUserList.setBackgroundColor(R.color.LightThemeColor);
+       /* RelativeLayout relativeLayout = getWindow().getDecorView().findViewById(R.id.relativeLayout_user_list);
+        relativeLayout.setBackgroundResource(R.color.design_default_color_primary_dark);
 
-        // relativeLayoutUserList.setBackgroundResource(R.color.LightThemeColor);
-
+     */
 
     }
 

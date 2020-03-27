@@ -12,14 +12,20 @@ import java.util.List;
 public class UsersViewModel  extends ViewModel {
 
     LiveData<List<UsersEntity>> mAllUserList;
+    LiveData<UsersEntity> deleteSelectUserFromUserList;
     UsersRepository usersRepository;
 
+    String deleteUserFromUsrList;
 
-    public UsersViewModel() {
 
-        usersRepository = new UsersRepository();
+    public UsersViewModel( String deleteUserFromUsrList) {
+        this.deleteUserFromUsrList =deleteUserFromUsrList;
+
+        usersRepository = new UsersRepository(deleteUserFromUsrList);
 
         mAllUserList = usersRepository.getAllUsers();
+        deleteSelectUserFromUserList = usersRepository.deleteUserFromUserList();
+
 
 
     }
@@ -29,6 +35,7 @@ public class UsersViewModel  extends ViewModel {
         return  mAllUserList;
     }
 
+    public LiveData<UsersEntity> getDeleteSelectUserFromUserList(){return deleteSelectUserFromUserList;}
 
 
 }

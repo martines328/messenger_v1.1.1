@@ -28,9 +28,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
             "--~B/aD03MTY7dz0xMDgwO3NtPTE7YXBwaWQ9eXRhY2h5b24-/https://media-" +
             "mbst-pub-ue1.s3.amazonaws.com/creatr" +
             "-uploaded-images/2019-11/7b5b5330-112b-11ea-a77f-7c019be7ecae";
-
-
-
+    private String deleteName;
 
 
     public UserListAdapter( Context context) {
@@ -59,6 +57,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
 
         holder.nameOfPeople.setText(entity.getNickname());
         String sendToName  =entity.getNickname();
+        getDeleteUserName(sendToName);
 
         Glide.with(context).load(address).into(holder.peopleAvatar);
 
@@ -68,7 +67,6 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
             public void onClick(View v) {
                 Intent intent = new Intent(context, Conversation.class);
                 intent.putExtra("sendToName", sendToName);
-                bundle = intent.getExtras();
                 context.startActivity(intent);
 
             }
@@ -78,6 +76,18 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
 
 
     }
+
+
+    public String getDeleteUserName(String deleteName){
+
+        this.deleteName = deleteName;
+        return deleteName;
+    }
+
+    public String setDeleteName(){
+        return deleteName;
+    }
+
 
     public List<UsersEntity> setUSers(List<UsersEntity> usersEntityList){
         allListMessage = usersEntityList;
