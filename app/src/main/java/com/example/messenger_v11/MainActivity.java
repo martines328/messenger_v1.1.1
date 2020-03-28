@@ -1,7 +1,5 @@
 package com.example.messenger_v11;
 
-import android.annotation.SuppressLint;
-import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,10 +12,9 @@ import com.example.messenger_v11.MessageRoom.MessageDataBase;
 import com.example.messenger_v11.MessageRoom.usersRoom.UsersDao;
 import com.example.messenger_v11.MessageRoom.usersRoom.UsersEntity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
-import android.text.Editable;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,8 +22,6 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 import androidx.core.view.GravityCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -42,8 +37,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener{
@@ -77,7 +71,9 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         appContext = this;
         changeColorMode(this);
 
-        person.setNameOfPerson("test2");
+
+
+        person.setNameOfPerson("test3");
 
 
         changeColorMode(this);
@@ -174,7 +170,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                LayoutInflater layoutInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
                View layout = layoutInflater.inflate(R.layout.dialog_add_user_fat
                        , findViewById(R.id.enterUser_edittext));
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.AlertDialogStyle);
                 EditText editText = layout.findViewById(R.id.enterUser_edittext);
                 builder.setView(layout);
 
@@ -188,13 +184,21 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
+
+
+
                         UsersEntity usersEntity = new UsersEntity();
 
                         String userNicknameET = editText.getText().toString();
+                        if (userNicknameET.equals("") || userNicknameET == null){
+                            dialog.cancel();
+                            Toast.makeText(context, "Enter valid name", Toast.LENGTH_SHORT).show();
+                        } else {
                             usersEntity.setNickname(userNicknameET);
                             usersEntity.setSendTo(userNicknameET);
                             usersDao.insertUsersToDB(usersEntity);
                             Toast.makeText(context, userNicknameET, Toast.LENGTH_SHORT).show();
+                        }
 
                     }
                 });
@@ -291,6 +295,9 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 
 
     void changeColorMode(Context context){
+
+
+        LinearLayout linearLayout = new LinearLayout(new ContextThemeWrapper(context,R.style.userListStyle));
 
        /* RelativeLayout relativeLayout = getWindow().getDecorView().findViewById(R.id.relativeLayout_user_list);
         relativeLayout.setBackgroundResource(R.color.design_default_color_primary_dark);

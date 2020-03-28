@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -72,26 +74,10 @@ public class UserList extends Fragment {
         });
 
 
-        getAllUserList();
-
-
-
 
 
         return root;
     }
-
-
-
-
-
-    void getAllUserList(){
-
-
-
-
-    }
-
 
 
 

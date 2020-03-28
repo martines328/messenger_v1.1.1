@@ -6,9 +6,11 @@
     android:id="@+id/card_view_user_list"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    style="@style/userListStyle"
     android:layout_marginBottom="6dp">
 <RelativeLayout
     android:orientation="vertical"
+    style="@style/userListStyle"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/relativeLayout_user_list"
@@ -24,6 +26,7 @@
         android:id="@+id/avatarMessage"
         android:scaleType="centerCrop"
         android:src="@mipmap/ic_launcher"
+        android:layout_margin="5dp"
         android:padding="3dp"
         android:layout_marginLeft="5dp"
 

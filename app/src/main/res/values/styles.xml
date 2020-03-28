@@ -20,29 +20,28 @@
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 
+    <style name="userListStyle" parent="Theme.AppCompat">
+        <item name="android:background">@color/colorUserList</item>
+        <item name="android:textColor">@color/cardview_dark_background</item>
+        <item name="android:editTextColor">@color/cardview_dark_background</item>
+
+    </style>
 
 
-    <style name="AppTheme.Dark.Dialog" parent="Theme.AppCompat.Dialog">
+
+    <style name="AuthDialog" parent="Theme.AppCompat.Dialog">
         <item name="colorAccent">#aaa</item>
         <item name="android:textColorPrimary">#E0B33D</item>
         <item name="android:background">#CA3F3F</item>
     </style>
 
+    
 
 
-   <!-- <style name="LightTheme" parent="AppTheme">
-
-        <item name="textColor">#000000</item>
-        <item name="bgColor">#FFFFFF</item>
-        <item name="metaTextColor">#606060</item>
-
+    <style name="AlertDialogStyle" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="android:background">@color/colorUserList</item>
     </style>
 
-    <style name="DarkTheme" parent="AppTheme">
-        <item name="textColor">#ffffff</item>
-        <item name="metaTextColor">#aeaeae</item>
-        <item name="bgColor">#000000</item>
-    </style>-->
 
 
 </resources>

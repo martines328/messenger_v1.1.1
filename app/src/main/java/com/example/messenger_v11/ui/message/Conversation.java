@@ -78,7 +78,10 @@ public class Conversation extends AppCompatActivity implements View.OnClickListe
 
 
         conversationAdapter = new ConversationAdapter(this);
-        messageRecyclreView.setLayoutManager(new LinearLayoutManager(this));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
+        linearLayoutManager.setStackFromEnd(true);
+        messageRecyclreView.setLayoutManager(linearLayoutManager);
+
 
 
 
