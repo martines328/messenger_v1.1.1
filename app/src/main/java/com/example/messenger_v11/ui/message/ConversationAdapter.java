@@ -23,6 +23,7 @@ import com.example.messenger_v11.MessageRoom.MessageInfoEntity;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.messenger_v11.Cipher.Aes256.decrypt;
 import static com.example.messenger_v11.MainActivity.person;
 
 public class ConversationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -78,7 +79,8 @@ public class ConversationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
 
         if (getItemViewType(position) == TYPE_MY){
-           ((MyMessageType) holder).myMessageTV.setText(messageInfoEntity.getMessages());
+
+           ((MyMessageType) holder).myMessageTV.setText(decrypt(messageInfoEntity.getMessages()));
 
         }else {
 

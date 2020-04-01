@@ -35,6 +35,7 @@ import org.json.JSONException;
 
 import java.util.List;
 
+import static com.example.messenger_v11.Cipher.Aes256.encrypt;
 import static com.example.messenger_v11.MainActivity.person;
 
 
@@ -110,7 +111,7 @@ public class Conversation extends AppCompatActivity implements View.OnClickListe
           }
       });
 
-
+        //TODO refactor all encrypt and recrypt method
 
     }
 
@@ -119,9 +120,11 @@ public class Conversation extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         if (messageTextET != null) {
             String message = messageTextET.getText().toString();
+            String encryptedMessage = encrypt(message);
+            Log.i("ciphertest", "conversation encr   "+encryptedMessage);
 
             new AddOutputMessageToDB(this, person.getNameOfPerson()
-                    ,sendToName, message).execute();
+                    ,sendToName, encryptedMessage).execute();
 
             messageTextET.getText().clear();
 
@@ -129,7 +132,7 @@ public class Conversation extends AppCompatActivity implements View.OnClickListe
 
             try {
                 MessageQueue.getInstance().addOutputMessage(new Message(person.getNameOfPerson() /// FROM HERE WE SEND MESSAGE WITH EXISTING NAME
-                        ,sendToName,message));
+                        ,sendToName,encryptedMessage));
             } catch (JSONException e) {
                 e.printStackTrace();
             }

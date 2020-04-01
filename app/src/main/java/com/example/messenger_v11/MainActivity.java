@@ -7,6 +7,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.example.messenger_v11.Authorization.AuthActivity;
+import com.example.messenger_v11.Cipher.Aes256;
+import com.example.messenger_v11.Cipher.AesKeyManager;
 import com.example.messenger_v11.MessageRoom.MessageDao;
 import com.example.messenger_v11.MessageRoom.MessageDataBase;
 import com.example.messenger_v11.MessageRoom.usersRoom.UsersDao;
@@ -36,9 +38,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import static com.example.messenger_v11.Cipher.Aes256.encrypt;
 
 public class MainActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener{
 
@@ -65,13 +70,16 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE
+                ,WindowManager.LayoutParams.FLAG_SECURE);
+
         setContentView(R.layout.activity_main);
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
 
         appContext = this;
+        AesKeyManager.getInstance();
+
         changeColorMode(this);
-
-
 
         person.setNameOfPerson("test3");
 
@@ -190,15 +198,20 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                         UsersEntity usersEntity = new UsersEntity();
 
                         String userNicknameET = editText.getText().toString();
+                        String encryptedUSerNAme = encrypt(userNicknameET);
+                        Log.i("ciphertest", encryptedUSerNAme);
+
+
                         if (userNicknameET.equals("") || userNicknameET == null){
                             dialog.cancel();
                             Toast.makeText(context, "Enter valid name", Toast.LENGTH_SHORT).show();
                         } else {
-                            usersEntity.setNickname(userNicknameET);
-                            usersEntity.setSendTo(userNicknameET);
+                            usersEntity.setNickname(encryptedUSerNAme);
+                            usersEntity.setSendTo(encryptedUSerNAme);
                             usersDao.insertUsersToDB(usersEntity);
                             Toast.makeText(context, userNicknameET, Toast.LENGTH_SHORT).show();
                         }
+
 
                     }
                 });

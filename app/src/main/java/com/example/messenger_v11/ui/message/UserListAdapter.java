@@ -3,6 +3,7 @@ package com.example.messenger_v11.ui.message;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,8 @@ import com.example.messenger_v11.R;
 
 import java.util.Collections;
 import java.util.List;
+
+import static com.example.messenger_v11.Cipher.Aes256.decrypt;
 
 public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyViewHolder> {
     Context context;
@@ -55,8 +58,12 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
 
         UsersEntity entity = allListMessage.get(position);
 
-        holder.nameOfPeople.setText(entity.getNickname());
+
+        String decryptedUSerNAme = decrypt(entity.getNickname());
+        holder.nameOfPeople.setText(decryptedUSerNAme);
         String sendToName  =entity.getNickname();
+
+        Log.i("ciphertest",sendToName);
         getDeleteUserName(sendToName);
 
         Glide.with(context).load(address).into(holder.peopleAvatar);
