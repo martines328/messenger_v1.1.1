@@ -4,19 +4,16 @@ import android.security.keystore.KeyProperties;
 import android.util.Base64;
 import android.util.Log;
 
-import androidx.annotation.AttrRes;
-
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-import java.security.spec.KeySpec;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
-import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.IvParameterSpec;
-import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
+
+import static com.example.messenger_v11.NDK.AESKeyGener.getNativeKey;
 
 public class Aes256  {
 
@@ -26,7 +23,9 @@ public class Aes256  {
     SecureRandom random;
 
 
-    private static String secretKeyy = "0000000000000";
+
+
+    private static String secretKeyy = getNativeKey();
     private static String salt = "00000000000000000000";
 
     public Aes256() {
