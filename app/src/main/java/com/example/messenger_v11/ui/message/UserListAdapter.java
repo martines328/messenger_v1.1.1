@@ -2,6 +2,7 @@ package com.example.messenger_v11.ui.message;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -51,6 +53,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
         return new MyViewHolder(view);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
@@ -59,26 +62,31 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
         UsersEntity entity = allListMessage.get(position);
 
 
+        try {
         String decryptedUSerNAme = decrypt(entity.getNickname());
-        holder.nameOfPeople.setText(decryptedUSerNAme);
-        String sendToName  =entity.getNickname();
+            holder.nameOfPeople.setText(decryptedUSerNAme);
+            String sendToName  =entity.getNickname();
 
-        Log.i("ciphertest",sendToName);
-        getDeleteUserName(sendToName);
+            Log.i("ciphertest",sendToName);
+            getDeleteUserName(sendToName);
 
-        Glide.with(context).load(address).into(holder.peopleAvatar);
+            Glide.with(context).load(address).into(holder.peopleAvatar);
 
 
-        holder.view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, Conversation.class);
-                intent.putExtra("sendToName", sendToName);
-                context.startActivity(intent);
+            holder.view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, Conversation.class);
+                    intent.putExtra("sendToName", sendToName);
+                    context.startActivity(intent);
 
-            }
-        });
+                }
+            });
 
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
 
 

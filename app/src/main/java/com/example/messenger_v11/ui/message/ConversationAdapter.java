@@ -1,8 +1,7 @@
 package com.example.messenger_v11.ui.message;
 
 import android.content.Context;
-import android.os.Bundle;
-import android.util.Log;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,17 +9,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
-import androidx.lifecycle.LiveData;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-import com.example.messenger_v11.Person;
 import com.example.messenger_v11.R;
 import com.example.messenger_v11.MessageRoom.MessageInfoEntity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.messenger_v11.Cipher.Aes256.decrypt;
@@ -66,31 +61,40 @@ public class ConversationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
     MessageInfoEntity messageInfoEntity = messagesList.get(position);
 
 
-    String fromPeople = messageInfoEntity.fromPeople;
-    String toPeople = messageInfoEntity.toPeople;
-
-    getItemName(fromPeople, toPeople);
 
 
-        if (getItemViewType(position) == TYPE_MY){
+            try {
+                String fromPeople = messageInfoEntity.fromPeople;
+                String toPeople = messageInfoEntity.toPeople;
 
-           ((MyMessageType) holder).myMessageTV.setText(decrypt(messageInfoEntity.getMessages()));
-
-        }else {
-
-
-           ((OtherMessageType) holder).anotherName.setText(messageInfoEntity.getFromPeople());
-            ((OtherMessageType) holder).anotherMessageBody.setText(messageInfoEntity.getMessages());
+                getItemName(fromPeople, toPeople);
 
 
+                if (getItemViewType(position) == TYPE_MY){
+                ((MyMessageType) holder).myMessageTV.setText(decrypt(messageInfoEntity.getMessages()));
 
-        }
+            }else {
+
+
+                ((OtherMessageType) holder).anotherName.setText(messageInfoEntity.getFromPeople());
+                ((OtherMessageType) holder).anotherMessageBody.setText(messageInfoEntity.getMessages());
+
+
+
+            }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+
 
 
     }

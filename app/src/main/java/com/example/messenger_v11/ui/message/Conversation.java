@@ -2,24 +2,18 @@ package com.example.messenger_v11.ui.message;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.example.messenger_v11.MessageRoom.ConversationViewModel;
@@ -29,7 +23,6 @@ import com.example.messenger_v11.R;
 import com.example.messenger_v11.SocketNetwork.Message;
 import com.example.messenger_v11.SocketNetwork.MessageQueue;
 import com.example.messenger_v11.MessageRoom.AddOutputMessageToDB;
-import com.example.messenger_v11.SocketNetwork.SocketConnectingManager;
 
 import org.json.JSONException;
 
@@ -116,29 +109,41 @@ public class Conversation extends AppCompatActivity implements View.OnClickListe
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onClick(View v) {
         if (messageTextET != null) {
             String message = messageTextET.getText().toString();
-            String encryptedMessage = encrypt(message);
-            Log.i("ciphertest", "conversation encr   "+encryptedMessage);
+            if (message.equals("")) {
 
-            new AddOutputMessageToDB(this, person.getNameOfPerson()
-                    ,sendToName, encryptedMessage).execute();
+                Toast.makeText(this, "Enter Message Please", Toast.LENGTH_SHORT).show();
+            } else {
+                String encryptedMessage = null;
+                try {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        encryptedMessage = encrypt(message);
+                    }
 
-            messageTextET.getText().clear();
+                    Log.i("ciphertest", "conversation encr   " + encryptedMessage);
+
+                    new AddOutputMessageToDB(this, person.getNameOfPerson()
+                            , sendToName, encryptedMessage).execute();
+
+                    messageTextET.getText().clear();
 
 
+                    try {
+                        MessageQueue.getInstance().addOutputMessage(new Message(person.getNameOfPerson() /// FROM HERE WE SEND MESSAGE WITH EXISTING NAME
+                                , sendToName, encryptedMessage));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
 
-            try {
-                MessageQueue.getInstance().addOutputMessage(new Message(person.getNameOfPerson() /// FROM HERE WE SEND MESSAGE WITH EXISTING NAME
-                        ,sendToName,encryptedMessage));
-            } catch (JSONException e) {
-                e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
             }
-
-
-
         }
     }
 }

@@ -11,9 +11,13 @@ public class AESKeyGener {
 
     public static native String getNativeKey();
 
-    private static native  String getNativeSalt();
+    public static native  String getNativeSalt();
 
-    private static native  String getNativeIV();
+    public static native  String getNativeIV();
+
+
+
+
 
 
 }

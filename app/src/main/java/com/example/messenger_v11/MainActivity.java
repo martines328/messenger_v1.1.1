@@ -4,11 +4,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 
 import com.example.messenger_v11.Authorization.AuthActivity;
-import com.example.messenger_v11.Cipher.Aes256;
-import com.example.messenger_v11.Cipher.AesKeyManager;
+import com.example.messenger_v11.Cipher.AesInitManager;
 import com.example.messenger_v11.MessageRoom.MessageDao;
 import com.example.messenger_v11.MessageRoom.MessageDataBase;
 import com.example.messenger_v11.MessageRoom.usersRoom.UsersDao;
@@ -22,6 +22,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.view.GravityCompat;
@@ -45,6 +46,7 @@ import android.widget.Toast;
 
 import static com.example.messenger_v11.Cipher.Aes256.encrypt;
 
+
 public class MainActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener{
 
     private AppBarConfiguration mAppBarConfiguration;
@@ -67,6 +69,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 
 
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,7 +80,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
 
         appContext = this;
-        AesKeyManager.getInstance();
+        AesInitManager.getInstance();
 
         changeColorMode(this);
 
@@ -189,6 +192,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 
 
                 builder.setPositiveButton(R.string.fatPositive, new DialogInterface.OnClickListener() {
+                    @RequiresApi(api = Build.VERSION_CODES.O)
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
@@ -198,8 +202,14 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                         UsersEntity usersEntity = new UsersEntity();
 
                         String userNicknameET = editText.getText().toString();
-                        String encryptedUSerNAme = encrypt(userNicknameET);
+                        //String encryptedUSerNAme = encrypt(userNicknameET); aes
+                        String encryptedUSerNAme = null;
+                        try {
+                            encryptedUSerNAme = encrypt(userNicknameET);
+
+
                         Log.i("ciphertest", encryptedUSerNAme);
+
 
 
                         if (userNicknameET.equals("") || userNicknameET == null){
@@ -213,7 +223,11 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                         }
 
 
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
+
                 });
 
                 builder.setNegativeButton(R.string.fatNegative, new DialogInterface.OnClickListener() {
