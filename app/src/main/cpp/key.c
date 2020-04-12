@@ -10,7 +10,7 @@
 JNIEXPORT jstring JNICALL
 Java_com_example_messenger_1v11_NDK_AESKeyGener_getNativeKey(JNIEnv *env, jclass clazz) {
 
-    jstring key = "B1C431EBB89355028E2C0E597EBFBF4239BA21573D50EC61E94622AAB1D7D94A";
+    jstring key = "Messenger-v11";
 
     return (*env)->NewStringUTF(env,key);
 
@@ -20,7 +20,7 @@ Java_com_example_messenger_1v11_NDK_AESKeyGener_getNativeKey(JNIEnv *env, jclass
 JNIEXPORT jstring JNICALL
 Java_com_example_messenger_1v11_NDK_AESKeyGener_getNativeSalt(JNIEnv *env, jclass clazz) {
 
-    jstring salt = "638D4D9C7491EA49";
+    jstring salt = " messmessmess";
     return (*env)->NewStringUTF(env,salt);
 
 

@@ -39,8 +39,7 @@ public class AesInitManager {
     private static void initKeys(){
         INSTANCE =new AesInitManager();
         Aes256 aes256 = new Aes256();
-        RSA512 rsa512 = new RSA512();
-        Log.i("ciphertest", rsa512.toString());
+        //RSA512 rsa512 = new RSA512();
 
     }
 

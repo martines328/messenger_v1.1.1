@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 
 import com.example.messenger_v11.Authorization.AuthActivity;
+import com.example.messenger_v11.Cipher.Aes256;
 import com.example.messenger_v11.Cipher.AesInitManager;
 import com.example.messenger_v11.MessageRoom.MessageDao;
 import com.example.messenger_v11.MessageRoom.MessageDataBase;
@@ -26,6 +27,8 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.view.GravityCompat;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -44,6 +47,9 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static com.example.messenger_v11.Cipher.Aes256.encrypt;
 
 
@@ -55,9 +61,10 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
     public static MessageDao messageDao;
     public static UsersDao usersDao;
     public Context context = MainActivity.this;
-    public final static Person person = new Person();
     SharedPreferences sharedPreferences;
-    String login, password;
+    public final static Person person = new Person();
+
+    Utils utils;
 
 
 
@@ -80,22 +87,21 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
 
         appContext = this;
+        utils = new Utils(this);
         AesInitManager.getInstance();
 
-        changeColorMode(this);
 
         person.setNameOfPerson("test3");
 
 
-        changeColorMode(this);
-
-
-        checkUserLogin();
         initDB();
+        checkCopyName("test");
 
+        utils.checkUserLogin();
 
         drawerLayout();
         createFATAlertDioalog();
+
 
 
 
@@ -202,6 +208,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                         UsersEntity usersEntity = new UsersEntity();
 
                         String userNicknameET = editText.getText().toString();
+
                         //String encryptedUSerNAme = encrypt(userNicknameET); aes
                         String encryptedUSerNAme = null;
                         try {
@@ -298,38 +305,43 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         return true;
     }
 
-    boolean checkUserLogin(){
-        sharedPreferences = getSharedPreferences("userSettings", MODE_PRIVATE);
-        login = sharedPreferences.getString("email", "");
-        password =  sharedPreferences.getString("password","");
-        Log.i("prefedit", "chek user login work");
-        Log.i("prefedit", login + password);
-        boolean loginResult = false;
-        if (login.equals("") || password.equals("")
-                || login == null || password == null){
-            Intent intent = new Intent(this, AuthActivity.class);
-            startActivity(intent);
-            return false;
-        }
-        else{
-
-            return true;
-        }
-
-
-    }
 
 
 
-    void changeColorMode(Context context){
+    /*boolean returnCopyName(boolean valueToReturn){
+        Log.i("checkname", String.valueOf(valueToReturn));
+
+        return valueToReturn;
+    }*/
 
 
-        LinearLayout linearLayout = new LinearLayout(new ContextThemeWrapper(context,R.style.userListStyle));
 
-       /* RelativeLayout relativeLayout = getWindow().getDecorView().findViewById(R.id.relativeLayout_user_list);
-        relativeLayout.setBackgroundResource(R.color.design_default_color_primary_dark);
+    boolean checkCopyName(String nameTocheck){
+        boolean[] checkresult  = {true};
 
-     */
+        LiveData<List<UsersEntity>> allusername = usersDao.getAllUsers();
+        allusername.observe(this, new Observer<List<UsersEntity>>() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void onChanged(List<UsersEntity> usersEntities) {
+
+                for (UsersEntity userEntity: usersEntities) {
+                    String name = userEntity.getNickname();
+                    String decryptName = Aes256.decrypt(name);
+
+                    if (decryptName.equals(nameTocheck)) checkresult[0] = true;
+                    else checkresult[0] = false;
+                }
+            }
+        });
+
+
+
+        Log.i("checkname", String.valueOf(checkresult[0]));
+        return checkresult[0];
+
+
+
 
     }
 
