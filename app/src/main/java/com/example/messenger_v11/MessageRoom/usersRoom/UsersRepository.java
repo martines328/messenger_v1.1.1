@@ -1,6 +1,5 @@
 package com.example.messenger_v11.MessageRoom.usersRoom;
 
-import android.app.Application;
 
 import androidx.lifecycle.LiveData;
 
@@ -12,12 +11,10 @@ public class UsersRepository {
 
    private LiveData<List<UsersEntity>> allUsersList;
    private LiveData<UsersEntity> mDeleteUserFromUserList;
-    private String deleteUser;
 
 
     public UsersRepository(String deleteUser) {
 
-        this.deleteUser = deleteUser;
         allUsersList = usersDao.getAllUsers();
       //  mDeleteUserFromUserList = usersDao.deleteUsersFromDB(deleteUser);
 

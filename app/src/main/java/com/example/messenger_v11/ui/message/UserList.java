@@ -45,7 +45,7 @@ public class UserList extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.user_list_fragment, container, false);
 
-        SocketConnectingManager.getInstance();
+
 
 
         RecyclerView.ItemAnimator itemAnimator = new DefaultItemAnimator();

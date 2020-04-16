@@ -50,27 +50,6 @@ public class MessageRoomSingleton {
 
     }
 
-
-
-    public static void initiateDB(Context context){
-
-
-        Log.i("initDB", "initDB");
-       // messageDao = MessageDataBase.getInstance(context).messageDao();
-
-
-    }
-
-
-
-
-
-
-
-
-
-
-
 }
 
 

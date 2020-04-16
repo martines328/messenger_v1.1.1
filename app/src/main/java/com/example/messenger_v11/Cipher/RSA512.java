@@ -1,23 +1,15 @@
 package com.example.messenger_v11.Cipher;
 
 import android.os.Build;
-import android.util.Base64;
-import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
-import java.nio.charset.StandardCharsets;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
-import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
-import java.security.SecureRandom;
 
 import javax.crypto.Cipher;
-
-import static com.example.messenger_v11.Cipher.rsaKeyManager.getPrivateKey;
-import static com.example.messenger_v11.Cipher.rsaKeyManager.getPublicKey;
 
 public class RSA512 {
 

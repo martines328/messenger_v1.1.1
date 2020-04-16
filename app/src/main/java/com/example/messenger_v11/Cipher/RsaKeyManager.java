@@ -4,9 +4,7 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.StringReader;
+
 import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
@@ -16,7 +14,7 @@ import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
 
-public class rsaKeyManager {
+public class RsaKeyManager {
 
 
 
@@ -40,9 +38,7 @@ public class rsaKeyManager {
             KeyFactory keyFactory = KeyFactory.getInstance("RSA");
             publicKey = keyFactory.generatePublic(keySpec);
             return publicKey;
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (InvalidKeySpecException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return publicKey;

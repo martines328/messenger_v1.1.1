@@ -1,5 +1,7 @@
 package com.example.messenger_v11.SocketNetwork;
 
+import android.util.Log;
+
 public class SocketConnectingManager {
 
 
@@ -38,6 +40,7 @@ public class SocketConnectingManager {
 
         INSTANCE = new SocketConnectingManager();
 
+        Log.i("singleton", INSTANCE.toString());
 
         SocketInitial socketInitial = new SocketInitial();
         socketInitial.execute();
@@ -48,6 +51,12 @@ public class SocketConnectingManager {
 
 
 
+
+    }
+
+    public static void clearSingletonConnection(){
+        INSTANCE = null;
+        //Log.i("singleton", INSTANCE.toString());
 
     }
 

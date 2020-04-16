@@ -34,7 +34,6 @@ import static com.example.messenger_v11.MainActivity.person;
 
 public class Conversation extends AppCompatActivity implements View.OnClickListener {
 
-    private static final String TAG = "mylogs" ;
     String sendToName;
 
 
@@ -94,14 +93,11 @@ public class Conversation extends AppCompatActivity implements View.OnClickListe
 
             }
         });*/
-      conversationViewModel.getMEssageByName().observe(this, new Observer<List<MessageInfoEntity>>() {
-          @Override
-          public void onChanged(List<MessageInfoEntity> messageInfoEntities) {
-              conversationAdapter.setListOfMessage(messageInfoEntities);
-              messageRecyclreView.setAdapter(conversationAdapter);
+      conversationViewModel.getMEssageByName().observe(this, messageInfoEntities -> {
+          conversationAdapter.setListOfMessage(messageInfoEntities);
+          messageRecyclreView.setAdapter(conversationAdapter);
 
 
-          }
       });
 
         //TODO refactor all encrypt and recrypt method
@@ -132,15 +128,13 @@ public class Conversation extends AppCompatActivity implements View.OnClickListe
                     messageTextET.getText().clear();
 
 
-                    try {
+
                         MessageQueue.getInstance().addOutputMessage(new Message(person.getNameOfPerson() /// FROM HERE WE SEND MESSAGE WITH EXISTING NAME
                                 , sendToName, encryptedMessage));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+
 
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    Log.i("mylog", e.toString());
                 }
 
             }

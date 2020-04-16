@@ -1,7 +1,6 @@
 package com.example.messenger_v11.Cipher;
 
 import android.os.Build;
-import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 

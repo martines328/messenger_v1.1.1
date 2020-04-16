@@ -17,15 +17,21 @@ import com.example.messenger_v11.Authorization.AuthActivity;
 import com.example.messenger_v11.Cipher.Aes256;
 import com.example.messenger_v11.MessageRoom.usersRoom.UsersEntity;
 
+import org.bouncycastle.util.encoders.Hex;
+
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 import static android.content.Context.MODE_PRIVATE;
+import static com.example.messenger_v11.MainActivity.person;
 import static com.example.messenger_v11.MainActivity.usersDao;
 
 public class Utils {
 
     SharedPreferences sharedPreferences;
-    String login, password;
+    String nickname;
     Context context;
 
 
@@ -36,32 +42,50 @@ public class Utils {
     }
 
 
-
-
-
-
-
-
+    void setNameOfPerson(){
+        sharedPreferences = context.getSharedPreferences("nickname",MODE_PRIVATE );
+        person.setNameOfPerson(sharedPreferences.getString("nick", ""));
+        Log.i("personNAme",sharedPreferences.getString("nick", "") );
+    }
 
     boolean checkUserLogin(){
-        sharedPreferences = context.getSharedPreferences("userSettings", MODE_PRIVATE);
-        login = sharedPreferences.getString("email", "");
-        password =  sharedPreferences.getString("password","");
-        Log.i("prefedit", "chek user login work");
-        Log.i("prefedit", login + password);
-        boolean loginResult = false;
-        if (login.equals("") || password.equals("")
-                || login == null || password == null){
-            Intent intent = new Intent(context, AuthActivity.class);
-            context.startActivity(intent);
-            return false;
+        sharedPreferences = context.getSharedPreferences("nickname", MODE_PRIVATE);
+        nickname = sharedPreferences.getString("nick", "");
+        Log.i("sharedlog",nickname);
+        if (nickname.equals("") || nickname == null )  return false;
+        else return true;
+
+
+
+    }
+
+    void  clearNicknameSharedPref(){
+        sharedPreferences  =context.getSharedPreferences("nickname",MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove("nick");
+        editor.commit();
+
+    }
+    void clearUsernamePasswordSharePref(){
+        sharedPreferences  = context.getSharedPreferences("userSettings",MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove("username");
+        editor.remove("password");
+        editor.commit();
+    }
+
+
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public static String getSHA256(String text) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(
+                    text.getBytes(StandardCharsets.UTF_8));
+            return new String(Hex.encode(hash));
+        } catch (NoSuchAlgorithmException e) {
+            return " ";
         }
-        else{
-
-            return true;
-        }
-
-
     }
 
 

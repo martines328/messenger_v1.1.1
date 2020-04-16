@@ -37,7 +37,7 @@ Java_com_example_messenger_1v11_NDK_AESKeyGener_getNativeIV(JNIEnv *env, jclass 
 
 
 JNIEXPORT jstring JNICALL
-Java_com_example_messenger_1v11_Cipher_rsaKeyManager_rsaPublicKey(JNIEnv *env, jclass clazz) {
+Java_com_example_messenger_1v11_Cipher_RsaKeyManager_rsaPublicKey(JNIEnv *env, jclass clazz) {
 
 
     jstring  pk = "-----BEGIN RSA PUBLIC KEY-----\n"
@@ -49,7 +49,7 @@ Java_com_example_messenger_1v11_Cipher_rsaKeyManager_rsaPublicKey(JNIEnv *env, j
 }
 
 JNIEXPORT jstring JNICALL
-Java_com_example_messenger_1v11_Cipher_rsaKeyManager_rsaPrivateKey(JNIEnv *env, jclass clazz) {
+Java_com_example_messenger_1v11_Cipher_RsaKeyManager_rsaPrivateKey(JNIEnv *env, jclass clazz) {
 
     jstring  rk = "-----BEGIN RSA PRIVATE KEY-----\n"
                   "MIIBOwIBAAJBAM5ow7CoEsb1EiYOh/s3Ba7ARmlr8Jh98N+QnDpgvYtPuROS9eQB\n"

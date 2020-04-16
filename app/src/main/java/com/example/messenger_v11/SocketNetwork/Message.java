@@ -11,6 +11,9 @@ public class Message  implements Comparable<Message>{
     private String from = null;
     private String to = null;
     private String body = null;
+    private String type = null;
+    private String subType = null;
+    private String date = null;
 
     public Message(String message) throws JSONException {
         this.message = message;
