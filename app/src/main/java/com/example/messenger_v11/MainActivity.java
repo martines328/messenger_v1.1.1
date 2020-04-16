@@ -189,6 +189,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                         dialog.cancel();
                         Toast.makeText(context, "Enter valid name", Toast.LENGTH_SHORT).show();
                     } else {
+
                         usersEntity.setNickname(encryptedUSerNAme);
                         usersEntity.setSendTo(encryptedUSerNAme);
                         usersDao.insertUsersToDB(usersEntity);
