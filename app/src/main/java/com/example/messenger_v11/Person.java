@@ -1,6 +1,5 @@
 package com.example.messenger_v11;
 
-import android.content.SharedPreferences;
 
 public class Person {
     

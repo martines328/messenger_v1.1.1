@@ -15,13 +15,15 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" >
+    </style>
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 
+
     <style name="userListStyle" parent="Theme.AppCompat">
-        <item name="android:background">@color/colorUserList</item>
+        <item name="android:background">@drawable/userlist_bg_color</item>
         <item name="android:textColor">@color/cardview_dark_background</item>
         <item name="android:editTextColor">@color/cardview_dark_background</item>
 
@@ -39,9 +41,17 @@
 
 
     <style name="AlertDialogStyle" parent="Theme.AppCompat.Dialog.Alert">
-        <item name="android:background">@color/colorUserList</item>
+        <item name="android:background">@drawable/userlist_bg_color</item>
     </style>
 
+
+    <style name="NavigationAppName" parent="TextAppearance.AppCompat">
+
+        <item name="android:textColor">@color/LightThemeColor</item>
+        <item name="android:textSize">30dp</item>
+        <item name="android:textStyle">bold</item>
+
+    </style>
 
 
 </resources>

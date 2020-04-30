@@ -57,6 +57,7 @@ public class UserList extends Fragment {
 
 
 
+
         userListAdapter = new UserListAdapter(getContext());
         UserViewModelFactory factory = new UserViewModelFactory(userListAdapter.setDeleteName());
         mUsersViewModel = ViewModelProviders.of(this,factory).get(UsersViewModel.class);

@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card_view_user_list"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    style="@style/userListStyle"
+    app:cardCornerRadius="15dp"
+    app:cardElevation="5dp"
+    app:cardMaxElevation="5dp"
     android:layout_marginBottom="6dp">
+
 <RelativeLayout
     android:orientation="vertical"
-    style="@style/userListStyle"
     android:layout_width="match_parent"
+    android:background="@drawable/userlist_bg_color"
     android:layout_height="wrap_content"
     android:id="@+id/relativeLayout_user_list"
     >
@@ -43,7 +46,7 @@
         android:layout_marginTop="5dp"
         android:textStyle="bold"
         android:textSize="25dp"
-        android:textColor="#3636A3"/>
+        android:textColor="@color/LightThemeColor"/>
 
    <!-- <TextView
         android:id="@+id/messageFragment"

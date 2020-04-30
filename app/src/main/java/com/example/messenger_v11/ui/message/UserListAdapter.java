@@ -17,17 +17,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.messenger_v11.MessageRoom.usersRoom.UsersEntity;
+import com.example.messenger_v11.Person;
 import com.example.messenger_v11.R;
+import com.example.messenger_v11.SocketNetwork.OpenRoomManager;
 
 import java.util.Collections;
 import java.util.List;
 
 import static com.example.messenger_v11.Cipher.Aes256.decrypt;
+import static com.example.messenger_v11.MainActivity.person;
 
 public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyViewHolder> {
     Context context;
     List<UsersEntity> allListMessage;
-    Bundle bundle;
 
     String address  = "https://s.yimg.com/uu/api/res/1.2/DdytqdFTgtQuxVrHLDdmjQ" +
             "--~B/aD03MTY7dz0xMDgwO3NtPTE7YXBwaWQ9eXRhY2h5b24-/https://media-" +
@@ -70,17 +72,19 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
             Log.i("ciphertest",sendToName);
             getDeleteUserName(sendToName);
 
-            Glide.with(context).load(address).into(holder.peopleAvatar);
+            Glide.with(context).load(R.mipmap.label2).into(holder.peopleAvatar);
 
 
-            holder.view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(context, Conversation.class);
-                    intent.putExtra("sendToName", sendToName);
-                    context.startActivity(intent);
+            holder.view.setOnClickListener(v -> {
+                Intent intent = new Intent(context, Conversation.class);
+                intent.putExtra("sendToName", sendToName);
 
-                }
+
+
+                OpenRoomManager openRoomManager = new OpenRoomManager(person.getNameOfPerson(),decrypt(sendToName));
+                openRoomManager.start();
+                context.startActivity(intent);
+
             });
 
 
@@ -128,7 +132,6 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             nameOfPeople = itemView.findViewById(R.id.nameOfPeople);
-            //messageFragment = itemView.findViewById(R.id.messageFragment);
             peopleAvatar = itemView.findViewById(R.id.avatarMessage);
             view = itemView;
         }

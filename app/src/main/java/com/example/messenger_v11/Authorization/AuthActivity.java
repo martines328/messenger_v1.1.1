@@ -12,6 +12,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.messenger_v11.R;
+import com.example.messenger_v11.SocketNetwork.NetworkService;
 import com.example.messenger_v11.SocketNetwork.SocketConnectingManager;
 import com.example.messenger_v11.Utils;
 
@@ -79,6 +80,7 @@ public class AuthActivity extends AppCompatActivity {
         new android.os.Handler().postDelayed(
                 () -> {
                     try {
+                        Thread.sleep(500);
                         SocketConnectingManager.getInstance();
                         Thread.sleep(1000);
 
@@ -103,7 +105,7 @@ public class AuthActivity extends AppCompatActivity {
                         e.printStackTrace();
                         }
 
-                }, 500);
+                }, 2000);
     }
 
 
@@ -129,15 +131,8 @@ public class AuthActivity extends AppCompatActivity {
 
         String password = _passwordText.getText().toString();
 
-      /*  if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            _emailText.setError("enter a valid email address");
-            valid = false;
-        } else {
-            _emailText.setError(null);
-        }*/
-
-        if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
-            _passwordText.setError("between 4 and 10 alphanumeric characters");
+        if (password.isEmpty() || password.length() <= 2 || password.length() >= 16) {
+            _passwordText.setError("between 8 and 16 alphanumeric characters");
             valid = false;
         } else {
             _passwordText.setError(null);

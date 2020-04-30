@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.example.messenger_v11.MainActivity;
 import com.example.messenger_v11.MessageRoom.ConversationViewModel;
 import com.example.messenger_v11.MessageRoom.ConversationViewModelFactory;
 import com.example.messenger_v11.MessageRoom.MessageInfoEntity;
@@ -28,6 +29,7 @@ import org.json.JSONException;
 
 import java.util.List;
 
+import static com.example.messenger_v11.Cipher.Aes256.decrypt;
 import static com.example.messenger_v11.Cipher.Aes256.encrypt;
 import static com.example.messenger_v11.MainActivity.person;
 
@@ -105,7 +107,7 @@ public class Conversation extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onClick(View v) {
         if (messageTextET != null) {
@@ -116,9 +118,7 @@ public class Conversation extends AppCompatActivity implements View.OnClickListe
             } else {
                 String encryptedMessage = null;
                 try {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                         encryptedMessage = encrypt(message);
-                    }
 
                     Log.i("ciphertest", "conversation encr   " + encryptedMessage);
 
@@ -127,10 +127,9 @@ public class Conversation extends AppCompatActivity implements View.OnClickListe
 
                     messageTextET.getText().clear();
 
-
-
-                        MessageQueue.getInstance().addOutputMessage(new Message(person.getNameOfPerson() /// FROM HERE WE SEND MESSAGE WITH EXISTING NAME
-                                , sendToName, encryptedMessage));
+                    String person = MainActivity.person.getNameOfPerson();
+                        MessageQueue.getInstance().addOutputMessage(new Message(person /// FROM HERE WE SEND MESSAGE WITH EXISTING NAME
+                                , decrypt(sendToName), message));
 
 
                 } catch (Exception e) {

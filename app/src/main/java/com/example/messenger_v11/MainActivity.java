@@ -31,39 +31,35 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-
 import com.google.android.material.navigation.NavigationView;
-
 import androidx.drawerlayout.widget.DrawerLayout;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
 import android.view.Menu;
 import android.view.WindowManager;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Toast;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.messenger_v11.Cipher.Aes256.encrypt;
 import static com.example.messenger_v11.SocketNetwork.NetworkService.closeConnection;
+import static com.example.messenger_v11.SocketNetwork.NetworkService.createRoomManager;
 
 
 public class MainActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener{
 
+
+
     private AppBarConfiguration mAppBarConfiguration;
-    public final static String TAG = "mylogs";
     public static Context appContext;
     public static MessageDao messageDao;
     public static UsersDao usersDao;
     public static Context context;
     SharedPreferences sharedPreferences;
     public final static Person person = new Person();
-
     Utils utils;
+    public static String nickname;
+
 
 
 
@@ -74,6 +70,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE
                 ,WindowManager.LayoutParams.FLAG_SECURE);
 
+
         setContentView(R.layout.activity_main);
 
         createCopyOfObject();
@@ -81,17 +78,18 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         loginDistribution();
         initDB();
         drawerLayout();
+        nickname = utils.setNameOfPerson();
+        Log.i("nicknameMA", nickname);
 
 
-        utils.setNameOfPerson();
 
 
         createFAB_Dioalog();
 
 
 
-
     }
+
 
 
     void createCopyOfObject(){
@@ -178,22 +176,35 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                 public void onClick(DialogInterface dialog, int which) {
 
                     UsersEntity usersEntity = new UsersEntity();
-
                     String userNicknameET = editText.getText().toString();
                     try {
                         String encryptedUSerNAme = encrypt(userNicknameET);
-
-                    Log.i("ciphertest", encryptedUSerNAme);
 
                     if (userNicknameET.equals("") || userNicknameET == null){
                         dialog.cancel();
                         Toast.makeText(context, "Enter valid name", Toast.LENGTH_SHORT).show();
                     } else {
 
-                        usersEntity.setNickname(encryptedUSerNAme);
-                        usersEntity.setSendTo(encryptedUSerNAme);
-                        usersDao.insertUsersToDB(usersEntity);
-                        Toast.makeText(context, userNicknameET, Toast.LENGTH_SHORT).show();
+
+                        createRoomManager.createRoom(person.getNameOfPerson(), userNicknameET)
+                                .doOnError(throwable -> Log.i("creteroom",throwable.getMessage()))
+                                .subscribe(aBoolean -> {
+                                    if (aBoolean ==  true ) {
+                                        usersEntity.setNickname(encryptedUSerNAme);
+                                        usersEntity.setSendTo(encryptedUSerNAme);
+                                        usersDao.insertUsersToDB(usersEntity);
+//                                        Toast.makeText(context, userNicknameET, Toast.LENGTH_SHORT).show();
+                                        Log.i("createroom", "create result TRUE");
+                                    }
+                                            else {
+                                        Log.i("createroom", "create result FALSE");
+                                        dialog.cancel();
+                                        Toast.makeText(MainActivity.this, "Some wrong in create message", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+
+
+
                     }
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -297,6 +308,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
     public void setContext(Context context) {
         this.context = context;
     }
+
 
 
 
