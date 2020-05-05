@@ -50,7 +50,7 @@ public class OpenRoomManager extends Thread {
             requestRoom.put("MessageType", "Room");
             requestRoom.put("Body", new JSONObject()
                     .put("Action","In")
-                    .put("Room", nickname+"_"+interlocutor )
+                    .put("Room", interlocutor+"_"+nickname )
                     .put("User1", nickname));
 
             dos.writeUTF(requestRoom.toString());

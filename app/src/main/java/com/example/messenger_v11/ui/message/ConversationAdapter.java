@@ -18,7 +18,6 @@ import com.example.messenger_v11.MessageRoom.MessageInfoEntity;
 
 import java.util.List;
 
-import static com.example.messenger_v11.Cipher.Aes256.decrypt;
 import static com.example.messenger_v11.MainActivity.person;
 
 public class ConversationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -50,7 +49,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             view = LayoutInflater.from(context).inflate(R.layout.conversation_owner_message,
                     parent,false);
             return new MyMessageType(view);
-        } else {
+        } else if (viewType == TYPE_OTHER){
             view = LayoutInflater.from(context).inflate(R.layout.conversation_another_message,
                     parent,false);
             return new OtherMessageType(view);
@@ -58,6 +57,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
 
 
+        else return null;
     }
 
 
@@ -73,12 +73,13 @@ public class ConversationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             try {
                 String fromPeople = messageInfoEntity.fromPeople;
                 String toPeople = messageInfoEntity.toPeople;
+                String messss = messageInfoEntity.getMessages();
 
                 getItemName(fromPeople, toPeople);
 
 
                 if (getItemViewType(position) == TYPE_MY){
-                ((MyMessageType) holder).myMessageTV.setText(decrypt(messageInfoEntity.getMessages()));
+                ((MyMessageType) holder).myMessageTV.setText(messageInfoEntity.getMessages());
 
             }else {
 

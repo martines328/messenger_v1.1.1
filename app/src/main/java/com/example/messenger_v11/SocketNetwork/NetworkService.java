@@ -1,13 +1,17 @@
 package com.example.messenger_v11.SocketNetwork;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 
+import com.example.messenger_v11.MainActivity;
 import com.example.messenger_v11.R;
+import com.example.messenger_v11.Utils;
 
 import org.json.JSONObject;
 
@@ -25,9 +29,6 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactory;
 
-import io.reactivex.rxjava3.core.Observable;
-import io.reactivex.rxjava3.schedulers.Schedulers;
-
 import static com.example.messenger_v11.MainActivity.context;
 import static com.example.messenger_v11.MainActivity.getContext;
 import static com.example.messenger_v11.Utils.setNameOfPerson;
@@ -38,6 +39,7 @@ public class NetworkService extends Thread {
     public static OpenRoomManager openRoomManager;
     public static CreateRoomManager createRoomManager;
     MessageAnalizer messageAnalizer;
+    Utils utils;
 
 
     static boolean authResult;
@@ -92,6 +94,7 @@ public class NetworkService extends Thread {
             socket.setKeepAlive(true);
             createRoomManager = new CreateRoomManager(socket);
             messageAnalizer = new MessageAnalizer();
+            utils = new Utils();
 
 
         } catch (Exception e) {
@@ -163,6 +166,7 @@ public class NetworkService extends Thread {
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private  boolean openCriptedAuthStream() {    /// place where we will be send message
         try {
 
@@ -174,23 +178,21 @@ public class NetworkService extends Thread {
                     && response.getString("Status").equals("OK")){
                 Log.i("cripto ", "openStream true" );
                 new MessageSenderService(dos).start();
+                /*utils.connectingStatus().subscribe(aBoolean -> {
+                    if (aBoolean == true)             Toast.makeText(context, "Connecting", Toast.LENGTH_SHORT).show();
 
-                //Log.i("messageservice", "send message");
+
+                });*/
+
 
                 while (true) {
-                    Log.i("mylog", "hi from input service");
                     String mes = dis.readUTF();
-                    //getMessage(new Message(mes));
-                    messageAnalizer.analizeMEssage(mes);
+                    messageAnalizer.analizeMessage(mes);
 
-                   // Log.i("mylog", "input message -- " + mes);
+                   Log.i("mylog", "input message -- " + mes);
                 }
 
-
-
             }else return false;
-
-
 
 
         } catch (Exception e) {
@@ -202,70 +204,9 @@ public class NetworkService extends Thread {
 
 
 
-   /* @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    public Observable<Boolean> authentication(){
-        return Observable.create( emitter -> {
-
-            sharedPreferences = getContext().getSharedPreferences("userSettings",Context.MODE_PRIVATE);
-
-            try {
-                if (openStreams() == true){
 
 
-                    Log.i("cripto ", "auth start" );
-
-                    JSONObject request = new JSONObject();
-
-                    request.put("Type","Request");
-                    request.put("SubType","Get");
-                    request.put("MessageType","Auth");
-                    request.put("Body",new JSONObject()
-                            .put("Login"
-                                    , sharedPreferences.getString("username", ""))
-                            .put("Password"
-                                    , sharedPreferences.getString("password", "")));
-
-
-                    dos.writeUTF(request.toString());
-                    String getResponse = dis.readUTF();
-                    JSONObject resultResponse = new JSONObject(getResponse);
-                    Log.i("cripto", " response AUTh " + resultResponse );
-                    String statusResponse = resultResponse.getString("Status");
-
-
-                    if (statusResponse.equals("OK")){
-
-                        SharedPreferences nickSharedPref = getContext().getSharedPreferences("nickname", Context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = nickSharedPref.edit();
-                        String responseNickname = resultResponse.getJSONObject("Body").getString("Nick");
-                        Log.i("cripto ", "response nickname  " + responseNickname );
-
-                        if (responseNickname!=null && responseNickname!="")
-                        {
-
-                            Log.i("cripto", "authResult "+ getAuthResult());
-                            editor.putString("nick", responseNickname);
-                            editor.commit();
-                            setNameOfPerson();
-                            openCriptedAuthStream();
-                            emitter.onNext(true);
-                        }
-                        else   emitter.onNext(false);
-
-                    }else if (statusResponse.equals("Failed") )emitter.onNext(false);
-
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-                emitter.onError(e);
-            }
-
-
-        });
-
-    }*/
-
-
+    @SuppressLint("NewApi")
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void authentication(){
         sharedPreferences = getContext().getSharedPreferences("userSettings",Context.MODE_PRIVATE);
@@ -349,10 +290,7 @@ public class NetworkService extends Thread {
     }
 
 
-    private void getMessage(Message msg){
-        MessageQueue.getInstance().addInputMessage(msg);
-        Log.i("msg", msg.getMessage());
-    }
+
 
 
     public  void setAuthResult(boolean authResult) {

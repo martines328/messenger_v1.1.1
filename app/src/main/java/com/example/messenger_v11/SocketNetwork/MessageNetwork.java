@@ -22,12 +22,6 @@ public class MessageNetwork extends AsyncTask<String, Void, Void> {
     @Override
     protected Void doInBackground(String... strings) {
 
-
-        
-
-
-
-
         while (true){
             try {
                 MessageQueue.getInstance().addOutputMessage(new Message("messageNetwork"

@@ -7,7 +7,7 @@ import static com.example.messenger_v11.MainActivity.person;
 
 public class SocketInitial extends AsyncTask<Void, Void, Void> {
 
-    private static final String host = "192.168.1.149";
+    private static final String host = "35.224.227.214";
     private static final int port = 5222;
 
     NetworkService networkService;

@@ -24,17 +24,11 @@ import com.example.messenger_v11.SocketNetwork.OpenRoomManager;
 import java.util.Collections;
 import java.util.List;
 
-import static com.example.messenger_v11.Cipher.Aes256.decrypt;
 import static com.example.messenger_v11.MainActivity.person;
 
 public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyViewHolder> {
     Context context;
     List<UsersEntity> allListMessage;
-
-    String address  = "https://s.yimg.com/uu/api/res/1.2/DdytqdFTgtQuxVrHLDdmjQ" +
-            "--~B/aD03MTY7dz0xMDgwO3NtPTE7YXBwaWQ9eXRhY2h5b24-/https://media-" +
-            "mbst-pub-ue1.s3.amazonaws.com/creatr" +
-            "-uploaded-images/2019-11/7b5b5330-112b-11ea-a77f-7c019be7ecae";
     private String deleteName;
 
 
@@ -65,7 +59,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
 
 
         try {
-        String decryptedUSerNAme = decrypt(entity.getNickname());
+        String decryptedUSerNAme = entity.getNickname();
             holder.nameOfPeople.setText(decryptedUSerNAme);
             String sendToName  =entity.getNickname();
 
@@ -81,7 +75,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
 
 
 
-                OpenRoomManager openRoomManager = new OpenRoomManager(person.getNameOfPerson(),decrypt(sendToName));
+                OpenRoomManager openRoomManager = new OpenRoomManager(person.getNameOfPerson(),sendToName);
                 openRoomManager.start();
                 context.startActivity(intent);
 

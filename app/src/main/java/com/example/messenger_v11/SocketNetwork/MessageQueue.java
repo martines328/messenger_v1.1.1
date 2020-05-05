@@ -42,9 +42,12 @@ public class MessageQueue {
     }
 
     public  void addInputMessage(Message msg){
-        Log.i("mylog", msg.getMessage());
+        Log.i("messageLog","add input Message  "+ msg.toString());
         MessageInfoEntity entity = new MessageInfoEntity();
         entity.setFromPeople(msg.getFrom());
+        String getfrom = msg.getFrom();
+        String getto = msg.getTo();
+        String msssg = msg.getBody();
         entity.setToPeople(msg.getTo());
         entity.setMessages(msg.getBody());
         //entity.setMessagetype(1);

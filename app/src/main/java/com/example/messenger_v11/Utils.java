@@ -4,11 +4,16 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.util.Log;
+import android.widget.Toast;
+
 import androidx.annotation.RequiresApi;
 import org.bouncycastle.util.encoders.Hex;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 import static android.content.Context.MODE_PRIVATE;
 import static com.example.messenger_v11.MainActivity.person;
@@ -22,14 +27,24 @@ public class Utils {
     public static String personNamestattic;
 
 
-
-
+    public Utils() {
+    }
 
     public Utils(Context context) {
         this.context = context;
 
     }
 
+
+
+
+    public Observable<Boolean> connectingStatus(){
+        return Observable.create(emitter -> {
+            emitter.onNext(true);
+            emitter.onComplete();
+
+        });
+    }
 
      public static String setNameOfPerson(){
         sharedPreferences = context.getSharedPreferences("nickname",MODE_PRIVATE );

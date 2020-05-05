@@ -23,7 +23,7 @@ public class Message  implements Comparable<Message>{
 
     public Message(String message) throws JSONException {
         this.Msg = message;
-        parce();
+        parce(message);
     }
 
 
@@ -52,12 +52,12 @@ public class Message  implements Comparable<Message>{
     }
 
 
-    private void parce() throws JSONException {
-        JSONObject object = new JSONObject(Msg);
+    private void parce(String msg) throws JSONException {
+        JSONObject object = new JSONObject(msg);
         From = object.getJSONObject("Body").getString("From");
         To = object.getJSONObject("Body").getString("To");
         message = object.getJSONObject("Body").getString("Msg");
-        Log.i("messageLog", message);
+        Log.i("messageLog parce ", object.toString());
 
     }
 

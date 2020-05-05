@@ -67,6 +67,8 @@ public class CreateRoomManager extends Thread {
 
             dos.writeUTF(requestRoom.toString());
 
+           emitter.onNext(true);
+           emitter.onComplete();
 
            /* String response = dis.readUTF();
             JSONObject responseRoom = new JSONObject(response);
@@ -76,8 +78,8 @@ public class CreateRoomManager extends Thread {
 
             if (statusResponse.equals("OK"))  emitter.onNext(true);
 
-            else emitter.onNext( false);*/
-            emitter.onComplete();
+            else emitter.onNext( false);
+            emitter.onComplete();*/
         }).observeOn(Schedulers.newThread())
                 .subscribeOn(Schedulers.newThread());
         }

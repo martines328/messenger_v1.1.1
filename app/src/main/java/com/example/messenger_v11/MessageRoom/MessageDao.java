@@ -20,7 +20,7 @@ public interface MessageDao {
 
     @Query("SELECT * FROM message WHERE fromPeople = :fromPeople and toPeople = :toPeople " +
             "or fromPeople = :toPeople and toPeople = :fromPeople")
-     LiveData<List<MessageInfoEntity>> getFromPeopleName( String fromPeople,String toPeople);
+     LiveData<List<MessageInfoEntity>> getfrompeoplename(String fromPeople, String toPeople);
 
 
     @Insert

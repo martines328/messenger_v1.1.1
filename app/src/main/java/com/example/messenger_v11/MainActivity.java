@@ -14,6 +14,7 @@ import com.example.messenger_v11.MessageRoom.MessageDao;
 import com.example.messenger_v11.MessageRoom.MessageDataBase;
 import com.example.messenger_v11.MessageRoom.usersRoom.UsersDao;
 import com.example.messenger_v11.MessageRoom.usersRoom.UsersEntity;
+import com.example.messenger_v11.SocketNetwork.MessageAnalizer;
 import com.example.messenger_v11.SocketNetwork.SocketConnectingManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -31,23 +32,25 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+
 import com.google.android.material.navigation.NavigationView;
+
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
 import android.view.Menu;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import java.util.List;
 
-import static com.example.messenger_v11.Cipher.Aes256.encrypt;
 import static com.example.messenger_v11.SocketNetwork.NetworkService.closeConnection;
 import static com.example.messenger_v11.SocketNetwork.NetworkService.createRoomManager;
 
 
-public class MainActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener{
-
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
 
     private AppBarConfiguration mAppBarConfiguration;
@@ -59,8 +62,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
     public final static Person person = new Person();
     Utils utils;
     public static String nickname;
-
-
+    MessageAnalizer messageAnalizer;
 
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -68,7 +70,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE
-                ,WindowManager.LayoutParams.FLAG_SECURE);
+                , WindowManager.LayoutParams.FLAG_SECURE);
 
 
         setContentView(R.layout.activity_main);
@@ -82,43 +84,35 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         Log.i("nicknameMA", nickname);
 
 
-
-
         createFAB_Dioalog();
-
 
 
     }
 
 
-
-    void createCopyOfObject(){
+    void createCopyOfObject() {
         context = MainActivity.this;
         appContext = this;
         utils = new Utils(this);
     }
 
 
-
-
-    private void loginDistribution(){
+    private void loginDistribution() {
 
         if (utils.checkUserLogin() == false) {
 
             Intent intent = new Intent(context, AuthActivity.class);
             context.startActivity(intent);
-        }else {
+        } else {
             SocketConnectingManager.getInstance();
         }
     }
 
 
-
-
-    private void initDB(){
-        if (usersDao == null){
+    private void initDB() {
+        if (usersDao == null) {
             usersDao = MessageDataBase.getInstance(this).usersDao();
-            Log.i("initDB" , "userInitDB");
+            Log.i("initDB", "userInitDB");
 
         }
 
@@ -132,7 +126,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
     }
 
 
-    protected void drawerLayout(){
+    protected void drawerLayout() {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -152,14 +146,13 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
     }
 
 
-
-    public void createFAB_Dioalog(){
+    public void createFAB_Dioalog() {
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(view -> {
-           LayoutInflater layoutInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-           View layout = layoutInflater.inflate(R.layout.dialog_add_user_fat
-                   , findViewById(R.id.enterUser_edittext));
+            LayoutInflater layoutInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+            View layout = layoutInflater.inflate(R.layout.dialog_add_user_fat
+                    , findViewById(R.id.enterUser_edittext));
             AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.AlertDialogStyle);
             EditText editText = layout.findViewById(R.id.enterUser_edittext);
             builder.setView(layout);
@@ -169,43 +162,38 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
             builder.setMessage(R.string.fatButtonLText);
 
 
-
             builder.setPositiveButton(R.string.fatPositive, new DialogInterface.OnClickListener() {
                 @RequiresApi(api = Build.VERSION_CODES.O)
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
 
-                    UsersEntity usersEntity = new UsersEntity();
+
                     String userNicknameET = editText.getText().toString();
                     try {
-                        String encryptedUSerNAme = encrypt(userNicknameET);
+                        String encryptedUSerNAme = userNicknameET;
 
-                    if (userNicknameET.equals("") || userNicknameET == null){
-                        dialog.cancel();
-                        Toast.makeText(context, "Enter valid name", Toast.LENGTH_SHORT).show();
-                    } else {
-
-
-                        createRoomManager.createRoom(person.getNameOfPerson(), userNicknameET)
-                                .doOnError(throwable -> Log.i("creteroom",throwable.getMessage()))
-                                .subscribe(aBoolean -> {
-                                    if (aBoolean ==  true ) {
-                                        usersEntity.setNickname(encryptedUSerNAme);
-                                        usersEntity.setSendTo(encryptedUSerNAme);
-                                        usersDao.insertUsersToDB(usersEntity);
-//                                        Toast.makeText(context, userNicknameET, Toast.LENGTH_SHORT).show();
-                                        Log.i("createroom", "create result TRUE");
-                                    }
-                                            else {
-                                        Log.i("createroom", "create result FALSE");
-                                        dialog.cancel();
-                                        Toast.makeText(MainActivity.this, "Some wrong in create message", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
+                        if (userNicknameET.equals("") || userNicknameET == null) {
+                            dialog.cancel();
+                            Toast.makeText(context, "Enter valid name", Toast.LENGTH_SHORT).show();
+                        } else {
 
 
+                            createRoomManager.createRoom(person.getNameOfPerson(), userNicknameET)
+                                    //.doOnError(throwable -> Log.i("creteroom",throwable.getMessage()))
+                                    .subscribe(aBoolean -> {
+                                        if (aBoolean == true) {
 
-                    }
+                                            dialog.cancel();
+
+
+                                        } else {
+                                            Toast.makeText(MainActivity.this, "Some wrong in create message", Toast.LENGTH_SHORT).show();
+                                        }
+
+                                    });
+
+
+                        }
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -220,9 +208,6 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         });
 
     }
-
-
-
 
 
     @Override
@@ -241,9 +226,9 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id  = item.getItemId();
+        int id = item.getItemId();
 
-        if (id == R.id.action_logout){
+        if (id == R.id.action_logout) {
 
             utils.clearNicknameSharedPref();
             utils.clearUsernamePasswordSharePref();
@@ -257,12 +242,11 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
     }
 
 
-
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        int id  = menuItem.getItemId();
+        int id = menuItem.getItemId();
 
-        if (id == R.id.nav_message){
+        if (id == R.id.nav_message) {
             Toast.makeText(this, "you chose home item menu ", Toast.LENGTH_SHORT).show();
         }
         DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -271,17 +255,16 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
     }
 
 
-
     @RequiresApi(api = Build.VERSION_CODES.O)
-    boolean checkCopyName(String nameTocheck){
-        boolean[] checkresult  = {true};
+    boolean checkCopyName(String nameTocheck) {
+        boolean[] checkresult = {true};
 
         LiveData<List<UsersEntity>> allusername = usersDao.getAllUsers();
         allusername.observe(this, usersEntities -> {
 
-            for (UsersEntity userEntity: usersEntities) {
+            for (UsersEntity userEntity : usersEntities) {
                 String name = userEntity.getNickname();
-                String decryptName = Aes256.decrypt(name);
+                String decryptName = name;
 
                 if (decryptName.equals(nameTocheck)) checkresult[0] = true;
                 else checkresult[0] = false;
@@ -289,16 +272,11 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         });
 
 
-
         Log.i("checkname", String.valueOf(checkresult[0]));
         return checkresult[0];
 
 
-
-
     }
-
-
 
 
     public static Context getContext() {
@@ -308,11 +286,6 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
     public void setContext(Context context) {
         this.context = context;
     }
-
-
-
-
-
 
 
 }

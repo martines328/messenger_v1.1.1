@@ -11,7 +11,7 @@
         android:id="@+id/anotherAvatar"
         android:layout_alignParentLeft="true"
         android:scaleType="centerInside"
-        android:background="@drawable/conversation_avatar_circle"
+        android:background="@mipmap/label2"
         android:layout_width="34dp"
         android:layout_height="34dp" />
 

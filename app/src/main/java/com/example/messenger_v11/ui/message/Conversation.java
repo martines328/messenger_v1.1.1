@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -29,8 +30,6 @@ import org.json.JSONException;
 
 import java.util.List;
 
-import static com.example.messenger_v11.Cipher.Aes256.decrypt;
-import static com.example.messenger_v11.Cipher.Aes256.encrypt;
 import static com.example.messenger_v11.MainActivity.person;
 
 
@@ -55,6 +54,7 @@ public class Conversation extends AppCompatActivity implements View.OnClickListe
 
 
 
+    @SuppressLint("NewApi")
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,22 +85,19 @@ public class Conversation extends AppCompatActivity implements View.OnClickListe
         conversationViewModel = ViewModelProviders.of(this, viewModelFactory).get(ConversationViewModel.class);
 
 
-       /* conversationViewModel.getAllMessagList().observe(this, new Observer<List<MessageInfoEntity>>() {
-            @Override
-            public void onChanged(List<MessageInfoEntity> messageInfoEntities) {
+        conversationViewModel.getAllMessagList().observe(this, messageInfoEntities -> {
 
 
-                conversationAdapter.setListOfMessage(messageInfoEntities);
-                messageRecyclreView.setAdapter(conversationAdapter);
+            conversationAdapter.setListOfMessage(messageInfoEntities);
+            messageRecyclreView.setAdapter(conversationAdapter);
 
-            }
-        });*/
-      conversationViewModel.getMEssageByName().observe(this, messageInfoEntities -> {
+        });
+     /* conversationViewModel.getMEssageByName().observe(this, messageInfoEntities -> {
           conversationAdapter.setListOfMessage(messageInfoEntities);
           messageRecyclreView.setAdapter(conversationAdapter);
 
 
-      });
+      });*/
 
         //TODO refactor all encrypt and recrypt method
 
@@ -118,7 +115,7 @@ public class Conversation extends AppCompatActivity implements View.OnClickListe
             } else {
                 String encryptedMessage = null;
                 try {
-                        encryptedMessage = encrypt(message);
+                        encryptedMessage = message;
 
                     Log.i("ciphertest", "conversation encr   " + encryptedMessage);
 
@@ -129,7 +126,7 @@ public class Conversation extends AppCompatActivity implements View.OnClickListe
 
                     String person = MainActivity.person.getNameOfPerson();
                         MessageQueue.getInstance().addOutputMessage(new Message(person /// FROM HERE WE SEND MESSAGE WITH EXISTING NAME
-                                , decrypt(sendToName), message));
+                                , sendToName, message));
 
 
                 } catch (Exception e) {

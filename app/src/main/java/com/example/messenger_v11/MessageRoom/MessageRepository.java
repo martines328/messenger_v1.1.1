@@ -1,7 +1,6 @@
 package com.example.messenger_v11.MessageRoom;
 
 import android.content.Intent;
-import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
@@ -17,7 +16,7 @@ public class MessageRepository {
     MessageDataBase messageDataBase ;
     LiveData<List<MessageInfoEntity>> mMessageInfoEntityList;
     LiveData<List<MessageInfoEntity>> getMessageByNAmeList;
-    String sendToName;
+    String sendToName ;
 
 
 
@@ -26,11 +25,12 @@ public class MessageRepository {
 
 
         this.sendToName = sendToName;
+        
 
 
         mMessageInfoEntityList = messageDao.getAllMessages();
 
-       getMessageByNAmeList  =messageDao.getFromPeopleName(person.nameOfPerson ,sendToName);
+       getMessageByNAmeList  =messageDao.getfrompeoplename(person.nameOfPerson ,sendToName);
     }
 
 

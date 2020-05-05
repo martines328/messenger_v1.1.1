@@ -42,6 +42,7 @@ public abstract class MessageDataBase  extends RoomDatabase {
         public void migrate(@NonNull SupportSQLiteDatabase database) {
            database.execSQL("ALTER TABLE users " + " ADD COLUMN sendTo TEXT ");
 
+
           // database.execSQL("ALTER TABLE message" + "ADD COLUMN ");
         }
     };
