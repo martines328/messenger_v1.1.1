@@ -54,12 +54,13 @@ public class OpenRoomManager extends Thread {
                     .put("User1", nickname));
 
             dos.writeUTF(requestRoom.toString());
+            dos.flush();
             Log.i("createroom", "open room" + requestRoom.toString());
 
 
 
-            String response = dis.readUTF();
-            Log.i("createroom", response);
+           // String response = dis.readUTF();
+           // Log.i("createroom", response);
 
         }catch (Exception e){
             e.printStackTrace();

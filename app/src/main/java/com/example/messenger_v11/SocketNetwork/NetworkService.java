@@ -92,6 +92,7 @@ public class NetworkService extends Thread {
             dos = new DataOutputStream(socket.getOutputStream());
             dis = new DataInputStream(socket.getInputStream());
             socket.setKeepAlive(true);
+           // socket.setSoTimeout(20000);
             createRoomManager = new CreateRoomManager(socket);
             messageAnalizer = new MessageAnalizer();
             utils = new Utils();
@@ -122,6 +123,7 @@ public class NetworkService extends Thread {
 
         SSLSocketFactory sslSF = sslContext.getSocketFactory();
         SSLSocket s = (SSLSocket) sslSF.createSocket(host,port);
+        Log.i("test","Test");
         s.startHandshake();
             Log.i("mylogsocket", s.toString());
 
@@ -132,6 +134,7 @@ public class NetworkService extends Thread {
 
         } catch (Exception e) {
             e.printStackTrace();
+            Log.i("sslsocket", e.toString());
         }
         return null;
     }
@@ -145,6 +148,7 @@ public class NetworkService extends Thread {
             Log.i("cripto ", "openStream  start " );
 
             dos.writeUTF(OPEN_REQUEST );
+            dos.flush();
             JSONObject response = new JSONObject(dis.readUTF());
             if (response.getString("Type").equals("Response")
                     && response.getString("SubType").equals("Connect")
@@ -166,11 +170,11 @@ public class NetworkService extends Thread {
     }
 
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     private  boolean openCriptedAuthStream() {    /// place where we will be send message
         try {
 
             dos.writeUTF(OPEN_REQUEST );
+            dos.flush();
             JSONObject response = new JSONObject(dis.readUTF());
             if (response.getString("Type").equals("Response")
                     && response.getString("SubType").equals("Connect")
@@ -178,18 +182,15 @@ public class NetworkService extends Thread {
                     && response.getString("Status").equals("OK")){
                 Log.i("cripto ", "openStream true" );
                 new MessageSenderService(dos).start();
-                /*utils.connectingStatus().subscribe(aBoolean -> {
-                    if (aBoolean == true)             Toast.makeText(context, "Connecting", Toast.LENGTH_SHORT).show();
-
-
-                });*/
 
 
                 while (true) {
                     String mes = dis.readUTF();
+                    Log.i("mylog", "input message -- " + mes);
                     messageAnalizer.analizeMessage(mes);
 
-                   Log.i("mylog", "input message -- " + mes);
+
+
                 }
 
             }else return false;
@@ -206,8 +207,6 @@ public class NetworkService extends Thread {
 
 
 
-    @SuppressLint("NewApi")
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void authentication(){
         sharedPreferences = getContext().getSharedPreferences("userSettings",Context.MODE_PRIVATE);
 
@@ -230,6 +229,7 @@ public class NetworkService extends Thread {
 
 
                 dos.writeUTF(request.toString());
+                dos.flush();
                 String getResponse = dis.readUTF();
                 JSONObject resultResponse = new JSONObject(getResponse);
                 Log.i("cripto", " response AUTh " + resultResponse );
@@ -269,8 +269,7 @@ public class NetworkService extends Thread {
 
 
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    @Override
+   /* @Override
     public void run() {
 
 
@@ -280,6 +279,7 @@ public class NetworkService extends Thread {
 
 
         authentication();
+        Log.i("network", "auth network");
 
 
 
@@ -288,10 +288,18 @@ public class NetworkService extends Thread {
         }
 
     }
+*/
+
+    @Override
+    public void run() {
+        super.run();
 
 
+        authentication();
+        Log.i("network", "auth network");
 
 
+    }
 
     public  void setAuthResult(boolean authResult) {
         this.authResult = authResult;

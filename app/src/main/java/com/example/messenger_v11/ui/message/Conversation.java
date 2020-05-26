@@ -85,26 +85,25 @@ public class Conversation extends AppCompatActivity implements View.OnClickListe
         conversationViewModel = ViewModelProviders.of(this, viewModelFactory).get(ConversationViewModel.class);
 
 
-        conversationViewModel.getAllMessagList().observe(this, messageInfoEntities -> {
+        /*conversationViewModel.getAllMessagList().observe(this, messageInfoEntities -> {
 
 
             conversationAdapter.setListOfMessage(messageInfoEntities);
             messageRecyclreView.setAdapter(conversationAdapter);
 
-        });
-     /* conversationViewModel.getMEssageByName().observe(this, messageInfoEntities -> {
+        });*/
+      conversationViewModel.getMEssageByName().observe(this, messageInfoEntities -> {
           conversationAdapter.setListOfMessage(messageInfoEntities);
           messageRecyclreView.setAdapter(conversationAdapter);
 
 
-      });*/
+      });
 
         //TODO refactor all encrypt and recrypt method
 
     }
 
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onClick(View v) {
         if (messageTextET != null) {
@@ -117,6 +116,7 @@ public class Conversation extends AppCompatActivity implements View.OnClickListe
                 try {
                         encryptedMessage = message;
 
+                        
                     Log.i("ciphertest", "conversation encr   " + encryptedMessage);
 
                     new AddOutputMessageToDB(this, person.getNameOfPerson()

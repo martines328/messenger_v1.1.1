@@ -26,7 +26,6 @@ public class MessageAnalizer {
     }
 
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     public void analizeMessage(String messageToAnalize) {
 
         try {

@@ -5,6 +5,8 @@ import android.util.Log;
 public class SocketConnectingManager {
 
 
+    private static final String host = "35.224.227.214";
+    private static final int port = 5222;
 
 
     private static volatile SocketConnectingManager INSTANCE;
@@ -44,6 +46,7 @@ public class SocketConnectingManager {
 
         SocketInitial socketInitial = new SocketInitial();
         socketInitial.execute();
+
 
 
 

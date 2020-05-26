@@ -58,25 +58,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public static MessageDao messageDao;
     public static UsersDao usersDao;
     public static Context context;
-    SharedPreferences sharedPreferences;
     public final static Person person = new Person();
     Utils utils;
     public static String nickname;
-    MessageAnalizer messageAnalizer;
 
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE
                 , WindowManager.LayoutParams.FLAG_SECURE);
-
-
         setContentView(R.layout.activity_main);
 
         createCopyOfObject();
-        AesInitManager.getInstance();
+        //AesInitManager.getInstance();
         loginDistribution();
         initDB();
         drawerLayout();
@@ -163,7 +158,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
             builder.setPositiveButton(R.string.fatPositive, new DialogInterface.OnClickListener() {
-                @RequiresApi(api = Build.VERSION_CODES.O)
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
 
@@ -255,7 +249,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     boolean checkCopyName(String nameTocheck) {
         boolean[] checkresult = {true};
 

@@ -12,7 +12,6 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.messenger_v11.R;
-import com.example.messenger_v11.SocketNetwork.NetworkService;
 import com.example.messenger_v11.SocketNetwork.SocketConnectingManager;
 import com.example.messenger_v11.Utils;
 
@@ -80,9 +79,8 @@ public class AuthActivity extends AppCompatActivity {
         new android.os.Handler().postDelayed(
                 () -> {
                     try {
-                        Thread.sleep(500);
                         SocketConnectingManager.getInstance();
-                        Thread.sleep(1000);
+                        Thread.sleep(4000);
 
                     boolean test = getAuthResult();
 

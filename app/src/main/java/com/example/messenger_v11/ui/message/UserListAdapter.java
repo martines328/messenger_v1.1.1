@@ -49,7 +49,6 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
         return new MyViewHolder(view);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 

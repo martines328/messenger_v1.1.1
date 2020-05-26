@@ -1,13 +1,13 @@
 package com.example.messenger_v11.SocketNetwork;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 
-import static com.example.messenger_v11.MainActivity.person;
 
 public class SocketInitial extends AsyncTask<Void, Void, Void> {
 
-    private static final String host = "35.224.227.214";
+    private static final String host = "64.225.60.235";
     private static final int port = 5222;
 
     NetworkService networkService;
@@ -16,7 +16,8 @@ public class SocketInitial extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... voids) {
 
-         new NetworkService(host,port).start();
+        Log.i("network", "network service");
+           new  NetworkService(host,port).start();
 
 
 

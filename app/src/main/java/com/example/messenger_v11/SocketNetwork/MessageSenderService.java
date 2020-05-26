@@ -42,6 +42,7 @@ public class MessageSenderService extends Thread {
 
     public void sendMessage(Message msg) throws IOException {
         dos.writeUTF(msg.getMessage());
+        dos.flush();
         Log.i("mylog", "message send - " + msg.getMessage());
 
     }

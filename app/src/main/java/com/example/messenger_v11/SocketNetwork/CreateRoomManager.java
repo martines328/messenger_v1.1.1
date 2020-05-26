@@ -1,17 +1,11 @@
 package com.example.messenger_v11.SocketNetwork;
 
-import android.util.Log;
-
 import org.json.JSONObject;
-
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-
 import javax.net.ssl.SSLSocket;
 
-import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observable;
-import io.reactivex.rxjava3.core.ObservableEmitter;
 import io.reactivex.rxjava3.core.ObservableOnSubscribe;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
@@ -22,7 +16,6 @@ public class CreateRoomManager extends Thread {
     SSLSocket socket;
     static DataInputStream dis;
     static DataOutputStream dos;
-     boolean createRoomResult;
 
 
     public CreateRoomManager(SSLSocket socket) {
@@ -38,20 +31,7 @@ public class CreateRoomManager extends Thread {
 
 
 
-    @Override
-    public void run() {
-        super.run();
-        Log.i("mylog", "asynctask thread");
-        try {
 
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-
-        }
 
 
         public Observable<Boolean> createRoom(String nickname, String interlocutor){
@@ -81,7 +61,7 @@ public class CreateRoomManager extends Thread {
             else emitter.onNext( false);
             emitter.onComplete();*/
         }).observeOn(Schedulers.newThread())
-                .subscribeOn(Schedulers.newThread());
+                .subscribeOn(Schedulers.computation());
         }
 
 
