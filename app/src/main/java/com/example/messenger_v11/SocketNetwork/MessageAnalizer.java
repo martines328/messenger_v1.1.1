@@ -79,6 +79,8 @@ public class MessageAnalizer {
     }
 
 
+
+
     private void getMessage(Message msg) {
         MessageQueue.getInstance().addInputMessage(msg);
         Log.i("msg", msg.getMessage());

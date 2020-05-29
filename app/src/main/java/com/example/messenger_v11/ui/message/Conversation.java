@@ -2,7 +2,6 @@ package com.example.messenger_v11.ui.message;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,16 +19,13 @@ import android.widget.Toast;
 import com.example.messenger_v11.MainActivity;
 import com.example.messenger_v11.MessageRoom.ConversationViewModel;
 import com.example.messenger_v11.MessageRoom.ConversationViewModelFactory;
-import com.example.messenger_v11.MessageRoom.MessageInfoEntity;
 import com.example.messenger_v11.R;
 import com.example.messenger_v11.SocketNetwork.Message;
 import com.example.messenger_v11.SocketNetwork.MessageQueue;
 import com.example.messenger_v11.MessageRoom.AddOutputMessageToDB;
 
-import org.json.JSONException;
 
-import java.util.List;
-
+import static com.example.messenger_v11.Cipher.Aes256.encrypt;
 import static com.example.messenger_v11.MainActivity.person;
 
 
@@ -104,6 +100,7 @@ public class Conversation extends AppCompatActivity implements View.OnClickListe
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onClick(View v) {
         if (messageTextET != null) {

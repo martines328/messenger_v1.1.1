@@ -130,8 +130,6 @@ public class NetworkService extends Thread {
 
         return s;
 
-
-
         } catch (Exception e) {
             e.printStackTrace();
             Log.i("sslsocket", e.toString());

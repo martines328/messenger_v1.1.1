@@ -33,11 +33,6 @@ public class Aes256   {
         {
             byte[] iv = { 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0 };
             IvParameterSpec ivspec = new IvParameterSpec(iv);
-
-           /* SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
-            KeySpec spec = new PBEKeySpec(secretKey.toCharArray(), salt.getBytes(), 65536, 128);
-            SecretKey tmp = factory.generateSecret(spec);
-            SecretKeySpec secretKey = new SecretKeySpec(tmp.getEncoded(), "AES");*/
             PBEKeySpec spec = new PBEKeySpec(aesKeyGener.getNativeKey().toCharArray(),
                     aesKeyGener.getNativeSalt().getBytes(), 500, 256);
             SecretKey key = SecretKeyFactory.getInstance("PBKDF2withHmacSHA1").generateSecret(spec);

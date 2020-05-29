@@ -43,9 +43,7 @@ import android.view.Menu;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import java.util.List;
-
 import static com.example.messenger_v11.SocketNetwork.NetworkService.closeConnection;
 import static com.example.messenger_v11.SocketNetwork.NetworkService.createRoomManager;
 

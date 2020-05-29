@@ -7,8 +7,6 @@ public class AESKeyGener {
         System.loadLibrary("key");
     }
 
-
-
     public static native String getNativeKey();
 
     public static native  String getNativeSalt();
